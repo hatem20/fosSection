@@ -1,0 +1,69 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Task
+ *
+ * @author Hatem_tito
+ */
+namespace Blogger\sectionBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="Task")
+ **/
+class Task {
+   
+    
+    
+    /**
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank() 
+     */
+    protected $task;
+    
+    /**
+     * @Assert\NotBlank() 
+     */
+    protected $dueDate;
+    
+    public function setTask($task){
+        $this->task = $task;
+    }
+    
+    public function getTask(){
+        return $this->task;
+    }
+    
+    public function setDueDate( \Datetime $dueDate){
+        $this->dueDate = $dueDate;
+    }
+    
+    public function getDueDate(){
+        return $this->dueDate;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

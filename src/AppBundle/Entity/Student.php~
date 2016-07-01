@@ -1,0 +1,188 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Student
+ *
+ * @author Hatem_tito
+ */
+
+namespace Blogger\sectionBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="Student")
+ * @ORM\Entity(repositoryClass="Blogger\sectionBundle\Entity\Repository\StudentRepository")
+ */
+class Student {
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Course", mappedBy="students")
+     **/
+    private $courses;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Section", mappedBy="students")
+     */
+    private $sections;
+
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 11,
+     *      minMessage = "Your ID must be at least {{ limit }} characters long",
+     *      maxMessage = "Your ID cannot be longer than {{ limit }} characters"
+     * )
+     * @ORM\Column(type="string")
+     */
+    protected $studentId;
+    
+    /**
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $level;
+
+    /**
+     * @Assert\NotBlank() 
+     * @ORM\Column(type="string")
+     */
+    protected $password;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $name;
+    
+    /**
+     * Set Student_ID
+     *
+     * @param string $studentID
+     * @return Student
+     */
+    
+    public function __construct() {
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection(); 
+        $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
+         
+    }
+    public function setStudentID($Student_ID)
+    {
+        $this->Student_ID = $Student_ID;
+
+        return $this;
+    }
+
+    /**
+     * Get Student_ID
+     *
+     * @return string 
+     */
+    public function getStudentID()
+    {
+        return $this->Student_ID;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set level
+     *
+     * @param string $level
+     * @return Student
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return string 
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Student
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Student
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
+     * @Assert\True(message = "The password cannot match your first name")
+     */
+//    public function isPasswordLegal()
+//    {
+//        return $this->id !== $this->password;
+//    }
+}

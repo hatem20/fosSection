@@ -1,0 +1,68 @@
+<script>
+    function addCourse(x){
+        $.post("addCourse", {code: x}, function(result){
+            var ids = [];
+            var dates = [];
+            var response = $.parseJSON(result);
+            $("#toggle-tab").children().not('#home-li').remove();
+            $.each( response, function( i, val ) {
+                var day = JSON.stringify(val.day).replace(/\"/g, "");
+                var hour = JSON.stringify(val.hour).replace(/\"/g, "");
+                id = JSON.stringify(val.id).replace(/\"/g, "");
+                ids.push(id);
+                date = day+"_"+hour;
+                dates.push(date);
+                $("#toggle-tab").append("<li><a data-toggle='tab' href=#"+date+">"+date+"</a></li>");
+                $("#content-tab").append("<div role='tabpanel' class='tab-pane' id="+date+"></div>");
+                $("#"+date+"").empty();
+                $("#"+date+"").html(" {% include 'AppBundle::Pages/table.html.twig' %} ");
+                $("#DB-Table").attr("id",date+"_table");
+            });
+            $("#toggle-tab li:nth-of-type(2) > a").click();
+            $.post("getSections", {section: ids}, function(result){
+                var response = $.parseJSON(result);
+                
+                //loops for all sections owned by course
+                
+                EnsecId=4;
+                for(var x in response){
+                    var enroll = false;
+                    var num;
+                    
+                    //loob for students
+                    for(var y in response[x]){
+                        //sets #ids
+                        num = parseInt(y)+1;
+                        $("#"+dates[x]+"_table tr:last").after("<tr><td>"+num+"</td><td>"+response[x][y].studentId+"</td><td></td></tr>");
+                        if(response[x][y].studentId == ReadCookie()){
+                            enroll = true;
+                            EnsecId = ids[x];
+                            $("#"+dates[x]+"_table tr:last td:last-child").append("<button type='button' class='btn btn-danger' onclick='removeme("+ids[x]+")'>Remove</button>");
+                        }
+                    }
+                    //if all students has looped in sec i and no students has the spec id
+                    if(!enroll){
+                        $("#"+dates[x]+"_table tr:last td:last-child").append("<button type='button' class='btn btn-success' onclick='enroll("+ids[x]+","+num+")'>Enroll</button>");
+                    }
+                }
+            });
+        });
+    }
+    function ReadCookie()
+            {
+               var allcookies = document.cookie;
+               // Get all the cookies pairs in an array
+               cookiearray = allcookies.split(';');
+               
+               // Now take key value pair out of this array
+               for(var i=0; i<cookiearray.length; i++){
+                  name = cookiearray[i].split('=')[0];
+                  name = name.replace(/\s/g, '');
+                  value = cookiearray[i].split('=')[1];
+                  if(name === "USERID"){
+                     return value;
+                     break;
+                  }
+               }
+            }
+</script>

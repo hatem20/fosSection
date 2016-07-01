@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="../../favicon.ico">
+        <title>Signin</title>
+        <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('css/signin.css') }}" type="text/css" rel="stylesheet" />
+    </head>
+    <body>        
+    {{ form_start(form ,{'attr' : {'novalidate': 'novalidate', 'class':'form-signin' } } ) }}
+        {{ form_errors(form) }}
+        <div>
+            {{ form_label(form.Student_ID , 'Student ID',{'attr': {'class' : 'sr-only'} })  }}
+            {{ form_errors(form.Student_ID ) }}
+            {{ form_widget(form.Student_ID , {'attr' : {'class':'form-control'} }) }}
+        </div>
+        <div>
+            {{ form_label(form.password , 'Password' , { 'attr' : {'class':'sr-only'} }) }}
+            {{ form_errors(form.password) }}
+            {{ form_widget(form.password , {'attr' : {'class':'form-control'} }) }}
+        </div>
+
+        <div>
+            {{ form_widget(form.signin , {'attr' : {'class':'btn btn-lg btn-primary btn-block' } }) }}
+        </div>
+            {{ form_row(form._token) }}
+        {{ form_end(form) }}
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Welcome to Home Page</title> 
+        <link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('css/bootstrap-theme.min.css') }}" type="text/css" rel="stylesheet" />
+        <script src="{{ asset('js/static/jquery-1.11.2.js') }}"></script>
+        <script src="{{ asset('js/static/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/static/bootbox.min.js') }}"></script>
+        <script src="{{ asset('js/removeScript.js') }}"></script>
+    </head>
+    <body>
+        {% include 'AppBundle::Pages/header.html.twig' %}
+        <div>
+            <div class="container" >                  
+                <ul class="nav nav-tabs" id="toggle-tab" role="tablist" >
+                    <li class="active" id="home-li">
+                        <a data-toggle="tab" href="#Home" >Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="content-tab">
+                <div role="tabpanel" id="Home" class="tab-pane active"><h2>WelcomeTo Home Page</h2></div>
+            </div>
+        </div>
+    </body>
+</html>

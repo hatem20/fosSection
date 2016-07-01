@@ -1,0 +1,44 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+namespace Blogger\sectionBundle\Entity;
+
+use Doctrine\ORM\EntityRepository As Repository;
+/**
+ * Description of StudentRepository
+ *
+ * @author Hatem_tito
+ */
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="Blogger\sectionBundle\Entity\StudentRepository")
+ */
+class StudentRepository extends Repository {
+    
+    public function findAllOrderedByName()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT * FROM sectionBundle:Student s ORDER BY s.name ASC'
+            )
+            ->getResult();
+    }
+
+    function getSubjects($stdntId){
+        return $this->getEntityManager()->createQuery('SELECT p FROM BloggersectionBundle:Student p WHERE p.Student_ID = :id'
+        )->setParameter('id', $stdntId)->getResult();
+        
+    }
+    
+    }
+//'SELECT p
+//    FROM AppBundle:Product p
+//    WHERE p.price > :price
+//    ORDER BY p.price ASC'
